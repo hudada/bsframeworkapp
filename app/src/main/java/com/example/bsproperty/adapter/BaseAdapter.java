@@ -237,4 +237,9 @@ public abstract class BaseAdapter<T extends Object> extends RecyclerView.Adapter
             msg = (TextView) itemView.findViewById(R.id.tv_load_msg);
         }
     }
+
+    public void notifyDataSetChanged(ArrayList<T> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
 }

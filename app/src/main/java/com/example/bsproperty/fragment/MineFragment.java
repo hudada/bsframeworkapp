@@ -2,6 +2,8 @@ package com.example.bsproperty.fragment;
 
 import android.os.Bundle;
 
+import com.example.bsproperty.R;
+
 /**
  * Created by yezi on 2018/1/27.
  */
@@ -19,6 +21,6 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public int getRootViewId() {
-        return 0;
+        return R.layout.fragment_mine;
     }
 }
