@@ -12,8 +12,11 @@ public class ApiManager {
     private static final String HOST = HTTP + IP + PROT;
     private static final String API = "/api";
     private static final String NOTICE = "/notice";
+    private static final String USER = "/user";
 
 
     public static final String HOME_LIST = HOST + API + NOTICE + "/";
+    public static final String REGISTER = HOST + API + USER + "/";
+
 
 }
