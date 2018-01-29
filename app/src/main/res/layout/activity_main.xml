@@ -23,8 +23,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:background="@color/blue_bg"
-        app:tabIndicatorHeight="0dp"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/text_0"></android.support.design.widget.TabLayout>
+        app:tabIndicatorHeight="0dp"></android.support.design.widget.TabLayout>
 </LinearLayout>
