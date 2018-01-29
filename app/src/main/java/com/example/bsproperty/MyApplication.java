@@ -2,6 +2,7 @@ package com.example.bsproperty;
 
 import android.app.Application;
 
+import com.example.bsproperty.bean.UserObjBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient;
  */
 
 public class MyApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

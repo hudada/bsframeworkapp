@@ -17,6 +17,6 @@ public class ApiManager {
 
     public static final String HOME_LIST = HOST + API + NOTICE + "/";
     public static final String REGISTER = HOST + API + USER + "/";
-
+    public static final String LOGIN = HOST + API + USER + "/login";
 
 }

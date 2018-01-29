@@ -1,12 +1,13 @@
 package com.example.bsproperty.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bsproperty.R;
 import com.example.bsproperty.bean.AccountBean;
@@ -15,12 +16,13 @@ import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 
+import java.io.Serializable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseActivity {
-
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.btn_back)
     Button btnBack;
@@ -30,19 +32,17 @@ public class RegisterActivity extends BaseActivity {
     EditText etNumber;
     @BindView(R.id.et_pass)
     EditText etPass;
-    @BindView(R.id.et_repass)
-    EditText etRepass;
-    @BindView(R.id.btn_register)
-    Button btnRegister;
+    @BindView(R.id.btn_login)
+    Button btnLogin;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        tvTitle.setText("用户注册");
+
     }
 
     @Override
     protected int getRootViewId() {
-        return R.layout.activity_register;
+        return R.layout.activity_login;
     }
 
     @Override
@@ -50,39 +50,36 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-
-    @OnClick({R.id.btn_back, R.id.btn_register})
+    @OnClick({R.id.btn_back, R.id.btn_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
                 break;
-            case R.id.btn_register:
+            case R.id.btn_login:
                 String number = etNumber.getText().toString().trim();
                 String pass = etPass.getText().toString().trim();
-                String repass = etRepass.getText().toString().trim();
-
                 if (TextUtils.isEmpty(number)) {
-                    showToast(RegisterActivity.this, "门牌号不能为空！");
+                    showToast(LoginActivity.this, "门牌号不能为空！");
                     return;
                 }
                 if (TextUtils.isEmpty(pass)) {
-                    showToast(RegisterActivity.this, "密码不能为空！");
+                    showToast(LoginActivity.this, "密码不能为空！");
                     return;
                 }
-                if (!pass.equals(repass)) {
-                    showToast(RegisterActivity.this, "两次密码输入不一致！");
-                    return;
-                }
-                OkHttpTools.postJson(RegisterActivity.this, ApiManager.REGISTER, new AccountBean(number, pass)).build()
-                        .execute(new BaseCallBack<UserObjBean>(RegisterActivity.this, UserObjBean.class) {
+                OkHttpTools.postJson(LoginActivity.this, ApiManager.LOGIN, new AccountBean(number, pass)).build()
+                        .execute(new BaseCallBack<UserObjBean>(LoginActivity.this, UserObjBean.class) {
                             @Override
                             public void onResponse(UserObjBean userObjBean) {
-                                showToast(RegisterActivity.this, "注册成功！");
-                                RegisterActivity.this.finish();
+                                showToast(LoginActivity.this, "登陆成功！");
+                                Intent intent=new Intent();
+                                intent.getExtras().putSerializable("userBean",userObjBean);
+                                setResult(521,intent);
+                                LoginActivity.this.finish();
                             }
                         });
                 break;
         }
     }
+
 }
