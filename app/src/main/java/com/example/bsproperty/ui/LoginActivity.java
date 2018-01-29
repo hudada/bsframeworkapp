@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.bsproperty.R;
 import com.example.bsproperty.bean.AccountBean;
+import com.example.bsproperty.bean.UserBean;
 import com.example.bsproperty.bean.UserObjBean;
 import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
@@ -72,9 +74,14 @@ public class LoginActivity extends BaseActivity {
                             @Override
                             public void onResponse(UserObjBean userObjBean) {
                                 showToast(LoginActivity.this, "登陆成功！");
+                                UserBean userBean=userObjBean.getData();
                                 Intent intent=new Intent();
-                                intent.getExtras().putSerializable("userBean",userObjBean);
-                                setResult(521,intent);
+                                intent.putExtra("username",userBean.getName());
+                                intent.putExtra("sex",userBean.getSex());
+                                intent.putExtra("tel",userBean.getTel());
+                                intent.putExtra("money",userBean.getBalance());
+                                intent.putExtra("number",userBean.getNumber());
+                                setResult(109,intent);
                                 LoginActivity.this.finish();
                             }
                         });

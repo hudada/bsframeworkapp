@@ -37,7 +37,6 @@ public class MineFragment extends BaseFragment {
     TextView tvSex;
     @BindView(R.id.tv_money)
     TextView tvMoney;
-    private UserObjBean userObjBean;
 
     @Override
     protected void loadData() {
@@ -57,7 +56,12 @@ public class MineFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_btn:
-                startActivityForResult(new Intent(mContext, LoginActivity.class), 521);
+                if (btnBtn.getText().equals("登      陆")) {
+                    startActivityForResult(new Intent(mContext, LoginActivity.class), 521);
+                }else{
+                    // 退出
+                }
+
                 break;
         }
     }
@@ -65,15 +69,14 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 521) {
-            userObjBean = (UserObjBean) data.getExtras().getSerializable("userBean");
-            Log.e("test",userObjBean.getData().getBalance() + "元");
+        if (resultCode == 109) {
             //更新UI
-            tvMoney.setText(userObjBean.getData().getBalance() + "元");
-            tvNumber.setText(userObjBean.getData().getNumber());
-            tvSex.setText(Integer.parseInt(userObjBean.getData().getSex())==1?"男":"女");
-            tvTel.setText(userObjBean.getData().getTel());
-            tvUsername.setText(userObjBean.getData().getName());
+            tvMoney.setText(data.getExtras().getString("money") + "元");
+            tvNumber.setText(data.getExtras().getString("number"));
+            tvSex.setText(Integer.parseInt(data.getExtras().getString("sex"))==1?"男":"女");
+            tvTel.setText(data.getExtras().getString("tel"));
+            tvUsername.setText(data.getExtras().getString("username"));
+            btnBtn.setText("退      出");
         }
     }
 }

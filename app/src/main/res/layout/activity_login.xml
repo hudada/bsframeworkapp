@@ -9,12 +9,22 @@
 
     <include layout="@layout/top_layout" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue_bg"
+        android:text="LOGO"
+        android:layout_marginTop="50dp"
+        android:textSize="38sp"
+        android:textStyle="bold"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/the_space"
         android:layout_marginRight="@dimen/the_space"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="60dp"
         android:orientation="horizontal">
 
         <TextView
@@ -54,7 +64,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="请输入您的密码"
-            android:inputType="textPassword" />
+            android:inputType="numberPassword" />
     </LinearLayout>
 
     <Button

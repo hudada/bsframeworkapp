@@ -1,12 +1,10 @@
 package com.example.bsproperty.bean;
 
-import java.io.Serializable;
-
 /**
  * Created by wdxc1 on 2018/1/28.
  */
 
-public class UserObjBean extends BaseResponse implements Serializable{
+public class UserObjBean extends BaseResponse {
     private UserBean data;
 
     public UserBean getData() {

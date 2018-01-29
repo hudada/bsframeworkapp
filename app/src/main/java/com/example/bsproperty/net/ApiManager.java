@@ -13,10 +13,12 @@ public class ApiManager {
     private static final String API = "/api";
     private static final String NOTICE = "/notice";
     private static final String USER = "/user";
+    private static final String RECORD = "/record";
 
 
     public static final String HOME_LIST = HOST + API + NOTICE + "/";
     public static final String REGISTER = HOST + API + USER + "/";
     public static final String LOGIN = HOST + API + USER + "/login";
+    public static final String RECORD_LIST = HOST + API + RECORD + "/";
 
 }
