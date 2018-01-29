@@ -28,7 +28,7 @@ public class SpUtils {
 
     public static UserBean getUserBean(Context context) {
         String user = getSp(context).getString(ABOUT_USER, "");
-        if (TextUtils.isEmpty(user)) {
+        if (!TextUtils.isEmpty(user)) {
             return new Gson().fromJson(user, UserBean.class);
         } else {
             return null;

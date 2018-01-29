@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
 import com.example.bsproperty.adapter.BaseAdapter;
 import com.example.bsproperty.bean.BaseResponse;
@@ -33,13 +34,24 @@ public class PriceFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        OkHttpTools.sendGet(mContext, ApiManager.RECORD_LIST + "1004").build().execute(new BaseCallBack<PamentRecordListBean>(mContext, PamentRecordListBean.class) {
-            @Override
-            public void onResponse(PamentRecordListBean pamentRecordListBean) {
-                mData = pamentRecordListBean.getData();
-                adapter.notifyDataSetChanged(mData);
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (MyApplication.getInstance().getUserBean() != null) {
+                OkHttpTools.sendGet(mContext, ApiManager.RECORD_LIST + MyApplication.getInstance().getUserBean().getName())
+                        .build().execute(new BaseCallBack<PamentRecordListBean>(mContext, PamentRecordListBean.class) {
+                    @Override
+                    public void onResponse(PamentRecordListBean pamentRecordListBean) {
+                        mData = pamentRecordListBean.getData();
+                        adapter.notifyDataSetChanged(mData);
+                    }
+                });
             }
-        });
+        }
     }
 
     @Override

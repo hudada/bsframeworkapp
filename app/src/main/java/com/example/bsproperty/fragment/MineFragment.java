@@ -53,6 +53,11 @@ public class MineFragment extends BaseFragment {
         if (userBean == null) {
             btnBtn.setText("登      陆");
         } else {
+            tvMoney.setText(userBean.getBalance() + "元");
+            tvNumber.setText(userBean.getNumber());
+            tvSex.setText(Integer.parseInt(userBean.getSex()) == 1 ? "男" : "女");
+            tvTel.setText(userBean.getTel());
+            tvUsername.setText(userBean.getName());
             btnBtn.setText("退      出");
         }
     }
