@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
 import com.example.bsproperty.bean.AccountBean;
 import com.example.bsproperty.bean.UserBean;
@@ -17,6 +18,7 @@ import com.example.bsproperty.bean.UserObjBean;
 import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
+import com.example.bsproperty.utils.SpUtils;
 
 import java.io.Serializable;
 
@@ -74,14 +76,16 @@ public class LoginActivity extends BaseActivity {
                             @Override
                             public void onResponse(UserObjBean userObjBean) {
                                 showToast(LoginActivity.this, "登陆成功！");
-                                UserBean userBean=userObjBean.getData();
-                                Intent intent=new Intent();
-                                intent.putExtra("username",userBean.getName());
-                                intent.putExtra("sex",userBean.getSex());
-                                intent.putExtra("tel",userBean.getTel());
-                                intent.putExtra("money",userBean.getBalance());
-                                intent.putExtra("number",userBean.getNumber());
-                                setResult(109,intent);
+                                UserBean userBean = userObjBean.getData();
+                                SpUtils.setUserBean(LoginActivity.this, userBean);
+                                MyApplication.getInstance().setUserBean(userBean);
+                                Intent intent = new Intent();
+                                intent.putExtra("username", userBean.getName());
+                                intent.putExtra("sex", userBean.getSex());
+                                intent.putExtra("tel", userBean.getTel());
+                                intent.putExtra("money", userBean.getBalance());
+                                intent.putExtra("number", userBean.getNumber());
+                                setResult(RESULT_OK, intent);
                                 LoginActivity.this.finish();
                             }
                         });

@@ -20,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by yezi on 2018/1/27.
  */
@@ -58,7 +60,7 @@ public class MineFragment extends BaseFragment {
             case R.id.btn_btn:
                 if (btnBtn.getText().equals("登      陆")) {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), 521);
-                }else{
+                } else {
                     // 退出
                 }
 
@@ -69,14 +71,18 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 109) {
-            //更新UI
-            tvMoney.setText(data.getExtras().getString("money") + "元");
-            tvNumber.setText(data.getExtras().getString("number"));
-            tvSex.setText(Integer.parseInt(data.getExtras().getString("sex"))==1?"男":"女");
-            tvTel.setText(data.getExtras().getString("tel"));
-            tvUsername.setText(data.getExtras().getString("username"));
-            btnBtn.setText("退      出");
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 521:
+                    //更新UI
+                    tvMoney.setText(data.getExtras().getString("money") + "元");
+                    tvNumber.setText(data.getExtras().getString("number"));
+                    tvSex.setText(Integer.parseInt(data.getExtras().getString("sex")) == 1 ? "男" : "女");
+                    tvTel.setText(data.getExtras().getString("tel"));
+                    tvUsername.setText(data.getExtras().getString("username"));
+                    btnBtn.setText("退      出");
+                    break;
+            }
         }
     }
 }
