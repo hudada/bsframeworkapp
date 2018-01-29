@@ -14,6 +14,9 @@ import okhttp3.OkHttpClient;
  */
 
 public class MyApplication extends Application {
+
+    private static MyApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +28,9 @@ public class MyApplication extends Application {
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);
+    }
+
+    public static MyApplication getInstance() {
+        return instance;
     }
 }
