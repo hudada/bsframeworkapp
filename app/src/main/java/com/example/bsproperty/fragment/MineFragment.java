@@ -1,5 +1,6 @@
 package com.example.bsproperty.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,9 @@ public class MineFragment extends BaseFragment {
     TextView tvSex;
     @BindView(R.id.tv_money)
     TextView tvMoney;
+    @BindView(R.id.tv_add)
+    TextView tvAdd;
+
     private UserBean userBean;
 
     @Override
@@ -63,7 +67,7 @@ public class MineFragment extends BaseFragment {
         return R.layout.fragment_mine;
     }
 
-    @OnClick({R.id.btn_btn})
+    @OnClick({R.id.btn_btn,R.id.tv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_btn:
@@ -81,6 +85,10 @@ public class MineFragment extends BaseFragment {
                 }
 
                 break;
+            case R.id.tv_add:
+
+
+                break;
         }
     }
 
@@ -93,7 +101,15 @@ public class MineFragment extends BaseFragment {
                     //更新UI
                     tvMoney.setText(data.getExtras().getString("money") + "元");
                     tvNumber.setText(data.getExtras().getString("number"));
-                    tvSex.setText(Integer.parseInt(data.getExtras().getString("sex")) == 1 ? "男" : "女");
+                    int sex=Integer.parseInt(data.getExtras().getString("sex"));
+                    if (sex==0){
+                        tvSex.setText("女");
+                    }else if(sex==1){
+                        tvSex.setText("男");
+                    }else {
+                        tvSex.setText("未填写");
+                    }
+
                     tvTel.setText(data.getExtras().getString("tel"));
                     tvUsername.setText(data.getExtras().getString("username"));
                     btnBtn.setText("退      出");

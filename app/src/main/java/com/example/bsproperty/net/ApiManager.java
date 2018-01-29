@@ -19,6 +19,11 @@ public class ApiManager {
     public static final String HOME_LIST = HOST + API + NOTICE + "/";
     public static final String REGISTER = HOST + API + USER + "/";
     public static final String LOGIN = HOST + API + USER + "/login";
+    public static final String RECORD_ADDMONEY = HOST + API + USER + "/addMoney/";
     public static final String RECORD_LIST = HOST + API + RECORD + "/";
+    public static final String RECORD_COMMIT = HOST + API + RECORD + "/editState/";
+
+
+
 
 }

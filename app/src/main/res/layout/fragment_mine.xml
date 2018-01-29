@@ -29,6 +29,7 @@
             android:textSize="18sp" />
 
         <TextView
+            android:gravity="right"
             android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,6 +133,7 @@
             android:textColor="@color/text_3"
             android:textSize="18sp" />
 
+
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"
@@ -142,6 +144,17 @@
             android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:text="( 点击充值 )"
+            android:layout_toLeftOf="@+id/tv_money"
+            android:textColor="@color/blue_bg"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <Button

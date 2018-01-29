@@ -1,6 +1,8 @@
 package com.example.bsproperty.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -78,8 +80,16 @@ public class RegisterActivity extends BaseActivity {
                         .execute(new BaseCallBack<UserObjBean>(RegisterActivity.this, UserObjBean.class) {
                             @Override
                             public void onResponse(UserObjBean userObjBean) {
-                                showToast(RegisterActivity.this, "注册成功！");
-                                RegisterActivity.this.finish();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this)
+                                        .setTitle("注册成功")
+                                        .setMessage("注册门牌号为：" + userObjBean.getData().getNumber())
+                                        .setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                RegisterActivity.this.finish();
+                                            }
+                                        });
+                                builder.show();
                             }
                         });
                 break;

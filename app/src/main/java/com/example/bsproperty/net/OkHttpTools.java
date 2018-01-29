@@ -6,10 +6,11 @@ import com.example.bsproperty.ui.BaseActivity;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
+import com.zhy.http.okhttp.builder.OtherRequestBuilder;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
-import com.zhy.http.okhttp.request.RequestCall;
 
 import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by yezi on 2018/1/27.
@@ -22,6 +23,15 @@ public class OkHttpTools {
         }
         return OkHttpUtils
                 .get()
+                .url(url);
+    }
+
+    public static OtherRequestBuilder sendPut(Context context, String url) {
+        if (context instanceof BaseActivity) {
+            ((BaseActivity) context).showProgress(context);
+        }
+        return OkHttpUtils.put()
+                .requestBody(RequestBody.create(null, ""))
                 .url(url);
     }
 

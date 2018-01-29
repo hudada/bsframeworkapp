@@ -38,10 +38,13 @@ public class LoginActivity extends BaseActivity {
     EditText etPass;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.btn_right)
+    Button btnRight;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+        tvTitle.setText("登 陆");
+        btnRight.setText("注 册");
     }
 
     @Override
@@ -54,7 +57,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_back, R.id.btn_login})
+    @OnClick({R.id.btn_back, R.id.btn_login,R.id.btn_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
@@ -89,6 +92,9 @@ public class LoginActivity extends BaseActivity {
                                 LoginActivity.this.finish();
                             }
                         });
+                break;
+            case R.id.btn_right:
+                    startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
                 break;
         }
     }
