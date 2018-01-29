@@ -6,13 +6,13 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue_bg"
-        android:text="LOGO"
         android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="LOGO"
+        android:textColor="@color/blue_bg"
         android:textSize="38sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/the_space"
-            android:text="尚未登陆"
+            android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -61,7 +61,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/the_space"
-            android:text="尚未登陆"
+            android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -87,7 +87,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/the_space"
-            android:text="尚未登陆"
+            android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -113,7 +113,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/the_space"
-            android:text="尚未登陆"
+            android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -139,7 +139,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/the_space"
-            android:text="尚未登陆"
+            android:hint="尚未登陆"
             android:textColor="@color/text_3"
             android:textSize="18sp" />
     </RelativeLayout>

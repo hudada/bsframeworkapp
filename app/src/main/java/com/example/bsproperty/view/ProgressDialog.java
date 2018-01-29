@@ -9,8 +9,8 @@ import com.example.bsproperty.R;
  * Created by yezi on 2018/1/27.
  */
 
-class ProgressDialoge extends Dialog {
-    public ProgressDialoge(Context context) {
+public class ProgressDialog extends Dialog {
+    public ProgressDialog(Context context) {
         super(context, R.style.MyDialog);
     }
 }

@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
+import com.example.bsproperty.bean.UserBean;
 import com.example.bsproperty.bean.UserObjBean;
 import com.example.bsproperty.ui.LoginActivity;
 import com.example.bsproperty.ui.RegisterActivity;
+import com.example.bsproperty.utils.SpUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +41,16 @@ public class MineFragment extends BaseFragment {
     TextView tvSex;
     @BindView(R.id.tv_money)
     TextView tvMoney;
+    private UserBean userBean;
 
     @Override
     protected void loadData() {
+        userBean = MyApplication.getInstance().getUserBean();
+        if (userBean == null) {
+            btnBtn.setText("登      陆");
+        } else {
+            btnBtn.setText("退      出");
+        }
     }
 
     @Override
@@ -62,6 +71,13 @@ public class MineFragment extends BaseFragment {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), 521);
                 } else {
                     // 退出
+                    SpUtils.cleanUserBean(mContext);
+                    tvMoney.setText("");
+                    tvNumber.setText("");
+                    tvSex.setText("");
+                    tvTel.setText("");
+                    tvUsername.setText("");
+                    btnBtn.setText("登      陆");
                 }
 
                 break;

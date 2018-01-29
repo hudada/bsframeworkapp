@@ -33,6 +33,9 @@ public class SpUtils {
         } else {
             return null;
         }
+    }
 
+    public static void cleanUserBean(Context context) {
+        getSp(context).edit().putString(ABOUT_USER, "").apply();
     }
 }

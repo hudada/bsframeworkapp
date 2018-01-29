@@ -7,11 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
 import com.example.bsproperty.fragment.ForumFragment;
 import com.example.bsproperty.fragment.HomeFragment;
 import com.example.bsproperty.fragment.MineFragment;
 import com.example.bsproperty.fragment.PriceFragment;
+import com.example.bsproperty.utils.SpUtils;
 
 import java.util.ArrayList;
 
@@ -69,7 +71,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        MyApplication.getInstance().setUserBean(SpUtils.getUserBean(this));
     }
 
     @Override
