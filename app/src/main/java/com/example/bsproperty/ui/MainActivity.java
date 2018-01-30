@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
@@ -14,6 +15,7 @@ import com.example.bsproperty.fragment.HomeFragment;
 import com.example.bsproperty.fragment.MineFragment;
 import com.example.bsproperty.fragment.PriceFragment;
 import com.example.bsproperty.utils.SpUtils;
+import com.example.bsproperty.view.ModifyItemDialog;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
+        new ModifyItemDialog(this)
+                .setTitle("修改xxx")
+                .setMessage("请输入xxx")
+                .setCancelClick("美特取消", null)
+                .setOkClick("喔特确认", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+
+
         homeFragment = new HomeFragment();
         priceFragment = new PriceFragment();
         forumFragment = new ForumFragment();
