@@ -58,26 +58,42 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-        userBean = MyApplication.getInstance().getUserBean();
-        if (userBean == null) {
-            btnBtn.setText("登      陆");
-            tvAdd.setVisibility(View.GONE);
-        } else {
-            OkHttpTools.sendGet(mContext,ApiManager.REGISTER+userBean.getNumber())
-                    .build().execute(new BaseCallBack<UserObjBean>(mContext,UserObjBean.class) {
-                @Override
-                public void onResponse(UserObjBean userObjBean) {
-                    userBean=userObjBean.getData();
-                    tvMoney.setText(userBean.getBalance() + "元");
-                    tvNumber.setText(userBean.getNumber());
-                    tvSex.setText(Integer.parseInt(userBean.getSex()) == 1 ? "男" : "女");
-                    tvTel.setText(userBean.getTel());
-                    tvUsername.setText(userBean.getName());
-                    tvAdd.setVisibility(View.VISIBLE);
-                    btnBtn.setText("退      出");
-                }
-            });
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && mContext != null) {
+            Log.e("hdd1","show");
+            userBean = MyApplication.getInstance().getUserBean();
+            if (userBean == null) {
+                btnBtn.setText("登      陆");
+                tvAdd.setVisibility(View.GONE);
+            } else {
+                OkHttpTools.sendGet(mContext, ApiManager.REGISTER + userBean.getNumber())
+                        .build().execute(new BaseCallBack<UserObjBean>(mContext, UserObjBean.class) {
+                    @Override
+                    public void onResponse(UserObjBean userObjBean) {
+                        userBean = userObjBean.getData();
+                        tvMoney.setText(userBean.getBalance() + "元");
+                        tvNumber.setText(userBean.getNumber());
+                        tvSex.setText(Integer.parseInt(userBean.getSex()) == 1 ? "男" : "女");
+                        tvTel.setText(userBean.getTel());
+                        tvUsername.setText(userBean.getName());
+                        tvAdd.setVisibility(View.VISIBLE);
+                        btnBtn.setText("退      出");
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mContext != null) {
+            setUserVisibleHint(true);
         }
     }
 
@@ -123,10 +139,10 @@ public class MineFragment extends BaseFragment {
 
                                         @Override
                                         public void onResponse(BaseResponse baseResponse) {
-                                            DecimalFormat format=new DecimalFormat("#.00");
-                                            userBean.setBalance(format.format(Double.parseDouble(userBean.getBalance())+Double.parseDouble(etStr))+"");
-                                            Log.e("test",userBean.getBalance());
-                                            tvMoney.setText(userBean.getBalance()+"元");
+                                            DecimalFormat format = new DecimalFormat("#.00");
+                                            userBean.setBalance(format.format(Double.parseDouble(userBean.getBalance()) + Double.parseDouble(etStr)) + "");
+                                            Log.e("test", userBean.getBalance());
+                                            tvMoney.setText(userBean.getBalance() + "元");
                                         }
                                     });
 
