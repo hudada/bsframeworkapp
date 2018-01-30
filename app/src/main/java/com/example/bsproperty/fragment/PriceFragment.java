@@ -42,7 +42,7 @@ public class PriceFragment extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (MyApplication.getInstance().getUserBean() != null) {
-                OkHttpTools.sendGet(mContext, ApiManager.RECORD_LIST + MyApplication.getInstance().getUserBean().getName())
+                OkHttpTools.sendGet(mContext, ApiManager.RECORD_LIST + MyApplication.getInstance().getUserBean().getNumber())
                         .build().execute(new BaseCallBack<PamentRecordListBean>(mContext, PamentRecordListBean.class) {
                     @Override
                     public void onResponse(PamentRecordListBean pamentRecordListBean) {
