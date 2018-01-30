@@ -12,5 +12,6 @@ import com.example.bsproperty.R;
 public class ProgressDialog extends Dialog {
     public ProgressDialog(Context context) {
         super(context, R.style.MyDialog);
+        setContentView(R.layout.dialog_progress);
     }
 }

@@ -19,6 +19,8 @@ import com.example.bsproperty.bean.UserObjBean;
 import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
+import com.example.bsproperty.ui.BaseActivity;
+import com.example.bsproperty.ui.EditUserActivity;
 import com.example.bsproperty.ui.LoginActivity;
 import com.example.bsproperty.ui.MainActivity;
 import com.example.bsproperty.ui.RegisterActivity;
@@ -53,6 +55,8 @@ public class MineFragment extends BaseFragment {
     TextView tvMoney;
     @BindView(R.id.tv_add)
     TextView tvAdd;
+    @BindView(R.id.btn_edit)
+    Button btnEdit;
 
     private UserBean userBean;
 
@@ -69,19 +73,38 @@ public class MineFragment extends BaseFragment {
             userBean = MyApplication.getInstance().getUserBean();
             if (userBean == null) {
                 btnBtn.setText("登      陆");
+                btnEdit.setVisibility(View.GONE);
                 tvAdd.setVisibility(View.GONE);
             } else {
-                OkHttpTools.sendGet(mContext, ApiManager.REGISTER + userBean.getNumber())
+                OkHttpTools.sendGet(mContext, ApiManager.REGISTER + userBean.getNumber(),false)
                         .build().execute(new BaseCallBack<UserObjBean>(mContext, UserObjBean.class) {
                     @Override
                     public void onResponse(UserObjBean userObjBean) {
                         userBean = userObjBean.getData();
                         tvMoney.setText(userBean.getBalance() + "元");
                         tvNumber.setText(userBean.getNumber());
-                        tvSex.setText(Integer.parseInt(userBean.getSex()) == 1 ? "男" : "女");
-                        tvTel.setText(userBean.getTel());
-                        tvUsername.setText(userBean.getName());
+                        int sex= Integer.parseInt(userBean.getSex());
+                        if (sex == 0) {
+                            tvSex.setText("女");
+                        } else if (sex == 1) {
+                            tvSex.setText("男");
+                        } else {
+                            tvSex.setText("未填写");
+                        }
+                        String tel=userBean.getTel();
+                        if (tel==null||tel.equals("")){
+                            tvTel.setText("未填写");
+                        }else{
+                            tvTel.setText(tel);
+                        }
+                        String username=userBean.getName();
+                        if (username==null||username.equals("")){
+                            tvUsername.setText("未填写");
+                        }else{
+                            tvUsername.setText(username);
+                        }
                         tvAdd.setVisibility(View.VISIBLE);
+                        btnEdit.setVisibility(View.VISIBLE);
                         btnBtn.setText("退      出");
                     }
                 });
@@ -107,7 +130,7 @@ public class MineFragment extends BaseFragment {
         return R.layout.fragment_mine;
     }
 
-    @OnClick({R.id.btn_btn, R.id.tv_add})
+    @OnClick({R.id.btn_btn, R.id.tv_add,R.id.btn_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_btn:
@@ -122,6 +145,8 @@ public class MineFragment extends BaseFragment {
                     tvTel.setText("");
                     tvUsername.setText("");
                     btnBtn.setText("登      陆");
+                    btnEdit.setVisibility(View.GONE);
+                    tvAdd.setVisibility(View.GONE);
                 }
 
                 break;
@@ -141,7 +166,7 @@ public class MineFragment extends BaseFragment {
                                         public void onResponse(BaseResponse baseResponse) {
                                             DecimalFormat format = new DecimalFormat("#.00");
                                             userBean.setBalance(format.format(Double.parseDouble(userBean.getBalance()) + Double.parseDouble(etStr)) + "");
-                                            Log.e("test", userBean.getBalance());
+                                            ((BaseActivity)mContext).showToast(mContext,baseResponse.getMessage());
                                             tvMoney.setText(userBean.getBalance() + "元");
                                         }
                                     });
@@ -153,12 +178,15 @@ public class MineFragment extends BaseFragment {
 
 
                 break;
+            case R.id.btn_edit:
+                Intent intent = new Intent(mContext, EditUserActivity.class);
+                startActivityForResult(intent,109);
+                break;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 521:
@@ -173,10 +201,24 @@ public class MineFragment extends BaseFragment {
                     } else {
                         tvSex.setText("未填写");
                     }
+                    String tel=data.getExtras().getString("tel");
+                    if (tel==null||tel.equals("")){
+                        tvTel.setText("未填写");
+                    }else{
+                        tvTel.setText(tel);
+                    }
+                    String username=data.getExtras().getString("username");
+                    if (username==null||username.equals("")){
+                        tvUsername.setText("未填写");
+                    }else{
+                        tvUsername.setText(username);
+                    }
                     tvAdd.setVisibility(View.VISIBLE);
-                    tvTel.setText(data.getExtras().getString("tel"));
-                    tvUsername.setText(data.getExtras().getString("username"));
+                    btnEdit.setVisibility(View.VISIBLE);
                     btnBtn.setText("退      出");
+                    break;
+                case  109:
+                    setUserVisibleHint(true);
                     break;
             }
         }

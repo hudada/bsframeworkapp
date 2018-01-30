@@ -1,13 +1,12 @@
 package com.example.bsproperty.ui;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.bsproperty.view.ProgressDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

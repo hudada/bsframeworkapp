@@ -26,6 +26,17 @@ public class OkHttpTools {
                 .url(url);
     }
 
+    public static GetBuilder sendGet(Context context, String url, boolean b) {
+        if (b) {
+            if (context instanceof BaseActivity) {
+                ((BaseActivity) context).showProgress(context);
+            }
+        }
+        return OkHttpUtils
+                .get()
+                .url(url);
+    }
+
     public static OtherRequestBuilder sendPut(Context context, String url) {
         if (context instanceof BaseActivity) {
             ((BaseActivity) context).showProgress(context);

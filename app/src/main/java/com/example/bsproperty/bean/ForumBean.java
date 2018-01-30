@@ -1,10 +1,12 @@
 package com.example.bsproperty.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by yezi on 2018/1/27.
  */
 
-public class ForumBean {
+public class ForumBean implements Serializable{
     private String id;
     private String title;
     private String info;

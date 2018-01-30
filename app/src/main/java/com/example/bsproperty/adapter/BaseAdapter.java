@@ -57,46 +57,54 @@ public abstract class BaseAdapter<T extends Object> extends RecyclerView.Adapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
-        if (viewType == TYPE_ITEM) {
-            holder = new BaseViewHolder(mInflater.inflate(mLayoutId, parent, false));
-        } else if (viewType == TYPE_HEAD) {
-            holder = new BaseViewHolder(mHeadView);
-        } else if (viewType == TYPE_FOOTER) {
-            holder = new BaseFooterViewHolder(mInflater.inflate(R.layout.item_footer, parent, false));
+        if (mData.size() == 0) {
+            holder = new BaseViewHolder(mInflater.inflate(R.layout.item_empty, parent, false));
         } else {
-            holder = new BaseViewHolder(mInflater.inflate(mLayoutIds.get(viewType), parent, false));
+            if (viewType == TYPE_ITEM) {
+                holder = new BaseViewHolder(mInflater.inflate(mLayoutId, parent, false));
+            } else if (viewType == TYPE_HEAD) {
+                holder = new BaseViewHolder(mHeadView);
+            } else if (viewType == TYPE_FOOTER) {
+                holder = new BaseFooterViewHolder(mInflater.inflate(R.layout.item_footer, parent, false));
+            } else {
+                holder = new BaseViewHolder(mInflater.inflate(mLayoutIds.get(viewType), parent, false));
+            }
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BaseAdapter.BaseFooterViewHolder) {
-            tv_load_msg = ((BaseFooterViewHolder) holder).msg;
-        } else if (holder instanceof BaseAdapter.BaseViewHolder) {
-            if (position == 0 && mHeadView != null && onInitHead != null) {
-                if (mData.size() > 0) {
-                    onInitHead.onInitHeadData(mHeadView, mData.get(position));
+        if (mData.size() == 0) {
+
+        } else {
+            if (holder instanceof BaseAdapter.BaseFooterViewHolder) {
+                tv_load_msg = ((BaseFooterViewHolder) holder).msg;
+            } else if (holder instanceof BaseAdapter.BaseViewHolder) {
+                if (position == 0 && mHeadView != null && onInitHead != null) {
+                    if (mData.size() > 0) {
+                        onInitHead.onInitHeadData(mHeadView, mData.get(position));
+                    } else {
+                        onInitHead.onInitHeadData(mHeadView, null);
+                    }
                 } else {
-                    onInitHead.onInitHeadData(mHeadView, null);
-                }
-            } else {
-                if (onItemClickListener != null) {
-                    ((BaseViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mHeadView != null) {
-                                onItemClickListener.onItemClick(v, mData.get(position - 1), position - 1);
-                            } else {
-                                onItemClickListener.onItemClick(v, mData.get(position), position);
+                    if (onItemClickListener != null) {
+                        ((BaseViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mHeadView != null) {
+                                    onItemClickListener.onItemClick(v, mData.get(position - 1), position - 1);
+                                } else {
+                                    onItemClickListener.onItemClick(v, mData.get(position), position);
+                                }
                             }
-                        }
-                    });
-                }
-                if (mHeadView != null) {
-                    initItemView((BaseViewHolder) holder, mData.get(position - 1), position - 1);
-                } else {
-                    initItemView((BaseViewHolder) holder, mData.get(position), position);
+                        });
+                    }
+                    if (mHeadView != null) {
+                        initItemView((BaseViewHolder) holder, mData.get(position - 1), position - 1);
+                    } else {
+                        initItemView((BaseViewHolder) holder, mData.get(position), position);
+                    }
                 }
             }
         }
@@ -106,7 +114,11 @@ public abstract class BaseAdapter<T extends Object> extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return mData.size() + (isFooter ? 1 : 0) + (mHeadView == null ? 0 : 1);
+        if (mData.size()==0){
+            return 1;
+        }else{
+            return mData.size() + (isFooter ? 1 : 0) + (mHeadView == null ? 0 : 1);
+        }
     }
 
     @Override

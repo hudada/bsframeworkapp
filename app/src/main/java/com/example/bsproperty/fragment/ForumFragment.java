@@ -2,6 +2,7 @@ package com.example.bsproperty.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -20,12 +21,15 @@ import com.example.bsproperty.bean.NoticeListBean;
 import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
+import com.example.bsproperty.ui.ForumDetailActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by yezi on 2018/1/27.
@@ -38,10 +42,11 @@ public class ForumFragment extends BaseFragment {
     SwipeRefreshLayout slList;
     private MyAdapter adapter;
     private ArrayList<ForumBean> mData;
+    private int curPosition = -1;
 
     @Override
     protected void loadData() {
-        OkHttpTools.sendGet(mContext, ApiManager.HOME_LIST).build()
+        OkHttpTools.sendGet(mContext, ApiManager.FORUM_LIST).build()
                 .execute(new BaseCallBack<ForumListBean>(mContext, ForumListBean.class) {
                     @Override
                     public void onResponse(ForumListBean forumListBean) {
@@ -66,10 +71,31 @@ public class ForumFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, Object item, int position) {
-
+                curPosition = position;
+                Intent intent = new Intent(mContext, ForumDetailActivity.class);
+                intent.putExtra("data",mData.get(position));
+                startActivityForResult(intent,5521);
             }
         });
         rvList.setAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK){
+            switch (requestCode){
+                case 5521:
+                    int count = data.getIntExtra("count",0);
+                    if (count != 0 && curPosition != -1){
+                        int curCount = Integer.parseInt(mData.get(curPosition).getCount());
+                        int total = curCount + count;
+                        mData.get(curPosition).setCount(total+"");
+                        adapter.notifyItemChanged(curPosition);
+                        curPosition = -1;
+                    }
+                    break;
+            }
+        }
     }
 
     @Override
@@ -86,7 +112,7 @@ public class ForumFragment extends BaseFragment {
         @Override
         public void initItemView(BaseViewHolder holder, ForumBean forumBean, int position) {
             holder.setText(R.id.tv_title, forumBean.getTitle());
-            holder.setText(R.id.tv_name, "(" + forumBean.getNumber() + "业主发布)");
+            holder.setText(R.id.tv_name, "(业主"+forumBean.getNumber()+"发布)");
             holder.setText(R.id.tv_time, forumBean.getDate());
             holder.setText(R.id.tv_content, forumBean.getInfo());
             holder.setText(R.id.tv_count, forumBean.getCount() + "回复");

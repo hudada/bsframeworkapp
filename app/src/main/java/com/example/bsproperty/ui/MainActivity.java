@@ -44,20 +44,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
 
-        new ModifyItemDialog(this)
-                .setTitle("修改xxx")
-                .setMessage("请输入xxx")
-                .setCancelClick("美特取消", null)
-                .setOkClick("喔特确认", new ModifyItemDialog.OnOkClickListener() {
-                    @Override
-                    public void onOkClick(String etStr) {
-                        if (!TextUtils.isEmpty(etStr)) {
-                            showToast(MainActivity.this, etStr);
-                        }
-                    }
-                }).show();
-
-
         homeFragment = new HomeFragment();
         priceFragment = new PriceFragment();
         forumFragment = new ForumFragment();

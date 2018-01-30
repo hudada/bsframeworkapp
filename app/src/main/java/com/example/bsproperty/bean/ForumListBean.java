@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by yezi on 2018/1/27.
  */
 
-public class ForumListBean {
+public class ForumListBean extends BaseResponse {
     private ArrayList<ForumBean> data;
 
     public ArrayList<ForumBean> getData() {
