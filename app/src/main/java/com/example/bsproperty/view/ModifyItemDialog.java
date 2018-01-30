@@ -77,7 +77,7 @@ public class ModifyItemDialog extends Dialog {
     }
 
 
-    public ModifyItemDialog setOkClick(String text, final View.OnClickListener onClickListener) {
+    public ModifyItemDialog setOkClick(String text, final OnOkClickListener onClickListener) {
         if (!TextUtils.isEmpty(text)) {
             btnOk.setText(text);
         }
@@ -87,10 +87,14 @@ public class ModifyItemDialog extends Dialog {
             public void onClick(View v) {
                 dismiss();
                 if (onClickListener != null) {
-                    btnOk.setOnClickListener(onClickListener);
+                    onClickListener.onOkClick(etModify.getText().toString());
                 }
             }
         });
         return this;
+    }
+
+    public interface OnOkClickListener{
+        void onOkClick(String etStr);
     }
 }

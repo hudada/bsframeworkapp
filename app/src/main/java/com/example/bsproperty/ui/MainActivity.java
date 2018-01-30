@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.example.bsproperty.MyApplication;
@@ -47,10 +48,12 @@ public class MainActivity extends BaseActivity {
                 .setTitle("修改xxx")
                 .setMessage("请输入xxx")
                 .setCancelClick("美特取消", null)
-                .setOkClick("喔特确认", new View.OnClickListener() {
+                .setOkClick("喔特确认", new ModifyItemDialog.OnOkClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onOkClick(String etStr) {
+                        if (!TextUtils.isEmpty(etStr)) {
+                            showToast(MainActivity.this, etStr);
+                        }
                     }
                 }).show();
 
