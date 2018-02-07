@@ -24,14 +24,14 @@
             android:textColor="@color/text_3"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/et_number"
+        <TextView
+            android:id="@+id/tv_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入您的账号"
-            android:textColor="@color/text_6"
-            android:inputType="text" />
+            android:hint="未填写"
+            android:textColor="@color/text_3"
+            android:textSize="18sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="密码："
+            android:text="旧密码："
             android:textColor="@color/text_3"
             android:textSize="18sp" />
 
@@ -70,31 +70,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="新密码："
+            android:textColor="@color/text_3"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_newpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入您的新密码"
+            android:textColor="@color/text_6"
+            android:inputType="numberPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/the_space"
+        android:layout_marginRight="@dimen/the_space"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="确认密码："
             android:textColor="@color/text_3"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/et_repass"
+            android:id="@+id/et_newpass2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请再次输入您的密码"
+            android:hint="请再次输入您的新密码"
             android:textColor="@color/text_6"
             android:inputType="numberPassword" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="@dimen/the_space"
-        android:layout_marginRight="@dimen/the_space"
-        android:layout_marginTop="50dp"
-        android:background="@color/blue_bg"
-        android:text="注      册"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
 </LinearLayout>

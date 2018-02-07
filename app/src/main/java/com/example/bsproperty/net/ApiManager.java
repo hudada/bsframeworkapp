@@ -21,11 +21,12 @@ public class ApiManager {
     public static final String REGISTER = HOST + API + USER + "/";
     public static final String LOGIN = HOST + API + USER + "/login";
     public static final String EDITUSER = HOST + API + USER + "/editUser";
+    public static final String EDITPASS = HOST + API + USER + "/editPass";
     public static final String RECORD_ADDMONEY = HOST + API + USER + "/addMoney/";
     public static final String RECORD_LIST = HOST + API + RECORD + "/";
     public static final String RECORD_COMMIT = HOST + API + RECORD + "/editState/";
-
     public static final String FORUM_LIST = HOST + API + FORUM + "/";
     public static final String FORUM_DETAIL_LIST = HOST + API + FORUM + "/";
     public static final String POST_REPLY = HOST + API + FORUM + "/";
+    public static final String POST_FORUM = HOST + API + FORUM + "/add";
 }

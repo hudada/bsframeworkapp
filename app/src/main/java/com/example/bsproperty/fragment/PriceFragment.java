@@ -19,7 +19,9 @@ import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 import com.example.bsproperty.ui.BaseActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -31,10 +33,11 @@ public class PriceFragment extends BaseFragment {
     SwipeRefreshLayout slList;
     private PriceFragment.MyAdapter adapter;
     private ArrayList<PamentRecordBean> mData;
+    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void loadData() {
-
+        setUserVisibleHint(true);
     }
 
     @Override
@@ -98,7 +101,7 @@ public class PriceFragment extends BaseFragment {
                 holder.setText(R.id.tv_title, "物管费" + "("
                         + ((Integer.parseInt(pamentRecordBean.getState()) == 0) ? "未缴清" : "已缴清") + ")");
             }
-            holder.setText(R.id.tv_time, pamentRecordBean.getDate());
+            holder.setText(R.id.tv_time,  format.format(new Date(Long.parseLong(pamentRecordBean.getDate()))));
             holder.setText(R.id.tv_content, pamentRecordBean.getAmount() + "元");
             final Button button = (Button) holder.getView(R.id.btn_commit);
             if (Integer.parseInt(pamentRecordBean.getState()) == 1) {

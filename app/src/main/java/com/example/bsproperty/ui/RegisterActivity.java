@@ -65,7 +65,7 @@ public class RegisterActivity extends BaseActivity {
                 String repass = etRepass.getText().toString().trim();
 
                 if (TextUtils.isEmpty(number)) {
-                    showToast(RegisterActivity.this, "门牌号不能为空！");
+                    showToast(RegisterActivity.this, "账号不能为空！");
                     return;
                 }
                 if (TextUtils.isEmpty(pass)) {
@@ -82,7 +82,7 @@ public class RegisterActivity extends BaseActivity {
                             public void onResponse(UserObjBean userObjBean) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this)
                                         .setTitle("注册成功")
-                                        .setMessage("注册门牌号为：" + userObjBean.getData().getNumber())
+                                        .setMessage("注册账号为：" + userObjBean.getData().getNumber())
                                         .setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {

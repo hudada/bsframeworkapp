@@ -22,11 +22,15 @@ import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 import com.example.bsproperty.ui.ForumDetailActivity;
+import com.example.bsproperty.ui.SendForumActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,6 +47,7 @@ public class ForumFragment extends BaseFragment {
     private MyAdapter adapter;
     private ArrayList<ForumBean> mData;
     private int curPosition = -1;
+    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void loadData() {
@@ -94,6 +99,9 @@ public class ForumFragment extends BaseFragment {
                         curPosition = -1;
                     }
                     break;
+                case 521:
+                    loadData();
+                    break;
             }
         }
     }
@@ -113,9 +121,17 @@ public class ForumFragment extends BaseFragment {
         public void initItemView(BaseViewHolder holder, ForumBean forumBean, int position) {
             holder.setText(R.id.tv_title, forumBean.getTitle());
             holder.setText(R.id.tv_name, "(业主"+forumBean.getNumber()+"发布)");
-            holder.setText(R.id.tv_time, forumBean.getDate());
+            holder.setText(R.id.tv_time,(
+                    format.format(new Date(Long.parseLong(forumBean.getDate())))));
             holder.setText(R.id.tv_content, forumBean.getInfo());
             holder.setText(R.id.tv_count, forumBean.getCount() + "回复");
         }
     }
+
+
+    @OnClick({R.id.tv_send})
+    public void onViewClicked() {
+        startActivityForResult(new Intent(mContext, SendForumActivity.class),521);
+    }
+
 }

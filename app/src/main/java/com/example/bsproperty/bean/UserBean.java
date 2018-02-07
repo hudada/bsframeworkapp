@@ -11,6 +11,9 @@ public class UserBean {
     private String sex;
     // 钱包余额
     private String balance;
+    private String dong;
+    private String dan;
+    private String hao;
 
     public String getNumber() {
         return number;
@@ -50,5 +53,29 @@ public class UserBean {
 
     public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public String getDong() {
+        return dong;
+    }
+
+    public void setDong(String dong) {
+        this.dong = dong;
+    }
+
+    public String getDan() {
+        return dan;
+    }
+
+    public void setDan(String dan) {
+        this.dan = dan;
+    }
+
+    public String getHao() {
+        return hao;
+    }
+
+    public void setHao(String hao) {
+        this.hao = hao;
     }
 }

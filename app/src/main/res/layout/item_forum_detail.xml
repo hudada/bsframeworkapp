@@ -21,11 +21,10 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="num业主回复"
-                android:textColor="@color/text_3"
+                android:textColor="@color/text_6"
                 android:textSize="15sp" />
         </LinearLayout>
 

@@ -20,6 +20,7 @@ import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 import com.example.bsproperty.ui.BaseActivity;
+import com.example.bsproperty.ui.EditPassActivity;
 import com.example.bsproperty.ui.EditUserActivity;
 import com.example.bsproperty.ui.LoginActivity;
 import com.example.bsproperty.ui.MainActivity;
@@ -57,6 +58,11 @@ public class MineFragment extends BaseFragment {
     TextView tvAdd;
     @BindView(R.id.btn_edit)
     Button btnEdit;
+    @BindView(R.id.tv_men)
+    TextView tvMen;
+    @BindView(R.id.tv_edit_pass)
+    TextView tvEditPass;
+
 
     private UserBean userBean;
 
@@ -75,6 +81,7 @@ public class MineFragment extends BaseFragment {
                 btnBtn.setText("登      陆");
                 btnEdit.setVisibility(View.GONE);
                 tvAdd.setVisibility(View.GONE);
+                tvEditPass.setVisibility(View.GONE);
             } else {
                 OkHttpTools.sendGet(mContext, ApiManager.REGISTER + userBean.getNumber(),false)
                         .build().execute(new BaseCallBack<UserObjBean>(mContext, UserObjBean.class) {
@@ -103,8 +110,22 @@ public class MineFragment extends BaseFragment {
                         }else{
                             tvUsername.setText(username);
                         }
+                        if (username==null||username.equals("")){
+                            tvUsername.setText("未填写");
+                        }else{
+                            tvUsername.setText("你好，"+username);
+                        }
+                        String dong=userBean.getDong();
+                        String dan=userBean.getDan();
+                        String hao=userBean.getHao();
+                        if(dong==null||dong.equals("")){
+                            tvMen.setText("未填写");
+                        }else{
+                            tvMen.setText(dong+"栋"+dan+"单元"+hao+"号");
+                        }
                         tvAdd.setVisibility(View.VISIBLE);
                         btnEdit.setVisibility(View.VISIBLE);
+                        tvEditPass.setVisibility(View.VISIBLE);
                         btnBtn.setText("退      出");
                     }
                 });
@@ -130,7 +151,7 @@ public class MineFragment extends BaseFragment {
         return R.layout.fragment_mine;
     }
 
-    @OnClick({R.id.btn_btn, R.id.tv_add,R.id.btn_edit})
+    @OnClick({R.id.btn_btn, R.id.tv_add,R.id.btn_edit,R.id.tv_edit_pass})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_btn:
@@ -139,14 +160,17 @@ public class MineFragment extends BaseFragment {
                 } else {
                     // 退出
                     SpUtils.cleanUserBean(mContext);
+                    MyApplication.getInstance().setUserBean(null);
                     tvMoney.setText("");
                     tvNumber.setText("");
                     tvSex.setText("");
                     tvTel.setText("");
                     tvUsername.setText("");
+                    tvMen.setText("");
                     btnBtn.setText("登      陆");
                     btnEdit.setVisibility(View.GONE);
                     tvAdd.setVisibility(View.GONE);
+                    tvEditPass.setVisibility(View.GONE);
                 }
 
                 break;
@@ -182,6 +206,9 @@ public class MineFragment extends BaseFragment {
                 Intent intent = new Intent(mContext, EditUserActivity.class);
                 startActivityForResult(intent,109);
                 break;
+            case  R.id.tv_edit_pass:
+                startActivity(new Intent(mContext, EditPassActivity.class));
+                break;
         }
     }
 
@@ -190,10 +217,11 @@ public class MineFragment extends BaseFragment {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 521:
+                    userBean = MyApplication.getInstance().getUserBean();
                     //更新UI
-                    tvMoney.setText(data.getExtras().getString("money") + "元");
-                    tvNumber.setText(data.getExtras().getString("number"));
-                    int sex = Integer.parseInt(data.getExtras().getString("sex"));
+                    tvMoney.setText(userBean.getBalance() + "元");
+                    tvNumber.setText(userBean.getNumber());
+                    int sex = Integer.parseInt(userBean.getSex());
                     if (sex == 0) {
                         tvSex.setText("女");
                     } else if (sex == 1) {
@@ -201,20 +229,29 @@ public class MineFragment extends BaseFragment {
                     } else {
                         tvSex.setText("未填写");
                     }
-                    String tel=data.getExtras().getString("tel");
+                    String tel=userBean.getTel();
                     if (tel==null||tel.equals("")){
                         tvTel.setText("未填写");
                     }else{
                         tvTel.setText(tel);
                     }
-                    String username=data.getExtras().getString("username");
+                    String username=userBean.getName();
                     if (username==null||username.equals("")){
                         tvUsername.setText("未填写");
                     }else{
-                        tvUsername.setText(username);
+                        tvUsername.setText("你好，"+username);
+                    }
+                    String dong=userBean.getDong();
+                    String dan=userBean.getDan();
+                    String hao=userBean.getHao();
+                    if(dong==null||dong.equals("")){
+                        tvMen.setText("未填写");
+                    }else{
+                        tvMen.setText(dong+"栋"+dan+"单元"+hao+"号");
                     }
                     tvAdd.setVisibility(View.VISIBLE);
                     btnEdit.setVisibility(View.VISIBLE);
+                    tvEditPass.setVisibility(View.VISIBLE);
                     btnBtn.setText("退      出");
                     break;
                 case  109:

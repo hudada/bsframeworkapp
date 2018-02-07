@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity {
                 String number = etNumber.getText().toString().trim();
                 String pass = etPass.getText().toString().trim();
                 if (TextUtils.isEmpty(number)) {
-                    showToast(LoginActivity.this, "门牌号不能为空！");
+                    showToast(LoginActivity.this, "账号不能为空！");
                     return;
                 }
                 if (TextUtils.isEmpty(pass)) {
@@ -82,13 +82,7 @@ public class LoginActivity extends BaseActivity {
                                 UserBean userBean = userObjBean.getData();
                                 SpUtils.setUserBean(LoginActivity.this, userBean);
                                 MyApplication.getInstance().setUserBean(userBean);
-                                Intent intent = new Intent();
-                                intent.putExtra("username", userBean.getName());
-                                intent.putExtra("sex", userBean.getSex());
-                                intent.putExtra("tel", userBean.getTel());
-                                intent.putExtra("money", userBean.getBalance());
-                                intent.putExtra("number", userBean.getNumber());
-                                setResult(RESULT_OK, intent);
+                                setResult(RESULT_OK);
                                 LoginActivity.this.finish();
                             }
                         });

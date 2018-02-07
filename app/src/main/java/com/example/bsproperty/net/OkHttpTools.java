@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
 import com.zhy.http.okhttp.builder.OtherRequestBuilder;
+import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
 
 import okhttp3.MediaType;
@@ -55,5 +56,16 @@ public class OkHttpTools {
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .url(url)
                 .content(new Gson().toJson(bean));
+    }
+
+    public static PostFormBuilder sendPost(Context context, String url) {
+
+            if (context instanceof BaseActivity) {
+                ((BaseActivity) context).showProgress(context);
+            }
+
+        return OkHttpUtils
+                .post()
+                .url(url);
     }
 }

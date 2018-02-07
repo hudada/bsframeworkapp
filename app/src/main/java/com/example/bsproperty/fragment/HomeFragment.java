@@ -18,7 +18,9 @@ import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -33,6 +35,7 @@ public class HomeFragment extends BaseFragment {
     SwipeRefreshLayout slList;
     private MyAdapter adapter;
     private ArrayList<NoticeBean> mData;
+    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void loadData() {
@@ -89,7 +92,7 @@ public class HomeFragment extends BaseFragment {
         @Override
         public void initItemView(BaseViewHolder holder, NoticeBean noticeBean, int position) {
             holder.setText(R.id.tv_title, noticeBean.getTitle());
-            holder.setText(R.id.tv_time, noticeBean.getDate());
+            holder.setText(R.id.tv_time, format.format(new Date(Long.parseLong(noticeBean.getDate()))));
             holder.setText(R.id.tv_content, noticeBean.getInfo());
         }
     }

@@ -57,7 +57,7 @@ public abstract class BaseAdapter<T extends Object> extends RecyclerView.Adapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
-        if (mData.size() == 0) {
+        if (mData.size() == 0 && mHeadView == null) {
             holder = new BaseViewHolder(mInflater.inflate(R.layout.item_empty, parent, false));
         } else {
             if (viewType == TYPE_ITEM) {
@@ -75,7 +75,7 @@ public abstract class BaseAdapter<T extends Object> extends RecyclerView.Adapter
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (mData.size() == 0) {
+        if (mData.size() == 0 && mHeadView == null) {
 
         } else {
             if (holder instanceof BaseAdapter.BaseFooterViewHolder) {

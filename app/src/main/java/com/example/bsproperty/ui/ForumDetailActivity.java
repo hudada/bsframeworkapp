@@ -27,7 +27,9 @@ import com.example.bsproperty.net.ApiManager;
 import com.example.bsproperty.net.BaseCallBack;
 import com.example.bsproperty.net.OkHttpTools;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +52,7 @@ public class ForumDetailActivity extends BaseActivity {
     private MyAdapter adapter;
     private ForumBean info;
     private int replyCount = 0;
+    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -88,7 +91,8 @@ public class ForumDetailActivity extends BaseActivity {
                                         @Override
                                         public void onInitHeadData(View headView, Object o) {
                                             ((TextView)headView.findViewById(R.id.tv_name)).setText("业主"+info.getNumber()+"发布");
-                                            ((TextView)headView.findViewById(R.id.tv_time)).setText(info.getDate());
+                                            ((TextView)headView.findViewById(R.id.tv_time)).setText(
+                                                    format.format(new Date(Long.parseLong(info.getDate()))));
                                             ((TextView)headView.findViewById(R.id.tv_content)).setText(info.getInfo());
                                         }
                                     });
@@ -125,7 +129,6 @@ public class ForumDetailActivity extends BaseActivity {
                         adapter.notifyDataSetChanged(mData);
                         etReply.setText("");
                         replyCount++;
-
                     }
                 });
                 break;
@@ -134,10 +137,10 @@ public class ForumDetailActivity extends BaseActivity {
 
     @Override
     public void finish() {
-        super.finish();
         Intent intent = new Intent();
         intent.putExtra("count",replyCount);
         setResult(RESULT_OK,intent);
+        super.finish();
     }
 
     private class MyAdapter extends BaseAdapter<ReplayBean>{
@@ -149,7 +152,8 @@ public class ForumDetailActivity extends BaseActivity {
         @Override
         public void initItemView(BaseViewHolder holder, ReplayBean replayBean, int position) {
             holder.setText(R.id.tv_name,"业主"+replayBean.getNumber()+"回复");
-            holder.setText(R.id.tv_time,replayBean.getDate());
+            holder.setText(R.id.tv_time,(
+                    format.format(new Date(Long.parseLong(replayBean.getDate())))));
             holder.setText(R.id.tv_content,replayBean.getInfo());
         }
     }
