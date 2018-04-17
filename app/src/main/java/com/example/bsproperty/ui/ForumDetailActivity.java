@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
@@ -52,7 +53,7 @@ public class ForumDetailActivity extends BaseActivity {
     private MyAdapter adapter;
     private ForumBean info;
     private int replyCount = 0;
-    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -78,10 +79,10 @@ public class ForumDetailActivity extends BaseActivity {
     protected void loadData() {
 
         info = (ForumBean) getIntent().getSerializableExtra("data");
-        if (info != null){
+        if (info != null) {
             tvTitle.setText(info.getTitle());
             OkHttpTools.sendGet(this, ApiManager.FORUM_DETAIL_LIST + info.getId()).build()
-                    .execute(new BaseCallBack<ReplayListBean>(this,ReplayListBean.class) {
+                    .execute(new BaseCallBack<ReplayListBean>(this, ReplayListBean.class) {
                         @Override
                         public void onResponse(ReplayListBean replayListBean) {
                             mData = replayListBean.getData();
@@ -90,10 +91,10 @@ public class ForumDetailActivity extends BaseActivity {
                                     new BaseAdapter.OnInitHead() {
                                         @Override
                                         public void onInitHeadData(View headView, Object o) {
-                                            ((TextView)headView.findViewById(R.id.tv_name)).setText("业主"+info.getNumber()+"发布");
-                                            ((TextView)headView.findViewById(R.id.tv_time)).setText(
+                                            ((TextView) headView.findViewById(R.id.tv_name)).setText("业主" + info.getNumber() + "发布");
+                                            ((TextView) headView.findViewById(R.id.tv_time)).setText(
                                                     format.format(new Date(Long.parseLong(info.getDate()))));
-                                            ((TextView)headView.findViewById(R.id.tv_content)).setText(info.getInfo());
+                                            ((TextView) headView.findViewById(R.id.tv_content)).setText(info.getInfo());
                                         }
                                     });
                             rvList.setAdapter(adapter);
@@ -103,28 +104,32 @@ public class ForumDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_back,R.id.btn_reply})
+    @OnClick({R.id.btn_back, R.id.btn_reply})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_back:
                 finish();
                 break;
             case R.id.btn_reply:
+                if (MyApplication.getInstance().getUserBean() == null) {
+                    Toast.makeText(ForumDetailActivity.this, "请先登陆", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String msg = etReply.getText().toString().trim();
-                if (TextUtils.isEmpty(msg)){
-                    showToast(ForumDetailActivity.this,"请输入回复内容");
+                if (TextUtils.isEmpty(msg)) {
+                    showToast(ForumDetailActivity.this, "请输入回复内容");
                     return;
                 }
                 final ReplayBean replayBean = new ReplayBean();
                 replayBean.setNumber(MyApplication.getInstance().getUserBean().getNumber());
                 replayBean.setInfo(msg);
                 replayBean.setForumId(info.getId());
-                replayBean.setDate(System.currentTimeMillis()+"");
-                OkHttpTools.postJson(ForumDetailActivity.this,ApiManager.POST_REPLY,
-                        replayBean).build().execute(new BaseCallBack<BaseResponse>(ForumDetailActivity.this,BaseResponse.class) {
+                replayBean.setDate(System.currentTimeMillis() + "");
+                OkHttpTools.postJson(ForumDetailActivity.this, ApiManager.POST_REPLY,
+                        replayBean).build().execute(new BaseCallBack<BaseResponse>(ForumDetailActivity.this, BaseResponse.class) {
                     @Override
                     public void onResponse(BaseResponse baseResponse) {
-                        showToast(ForumDetailActivity.this,baseResponse.getMessage());
+                        showToast(ForumDetailActivity.this, baseResponse.getMessage());
                         mData.add(replayBean);
                         adapter.notifyDataSetChanged(mData);
                         etReply.setText("");
@@ -138,12 +143,12 @@ public class ForumDetailActivity extends BaseActivity {
     @Override
     public void finish() {
         Intent intent = new Intent();
-        intent.putExtra("count",replyCount);
-        setResult(RESULT_OK,intent);
+        intent.putExtra("count", replyCount);
+        setResult(RESULT_OK, intent);
         super.finish();
     }
 
-    private class MyAdapter extends BaseAdapter<ReplayBean>{
+    private class MyAdapter extends BaseAdapter<ReplayBean> {
 
         public MyAdapter(Context context, int layoutId, ArrayList<ReplayBean> data) {
             super(context, layoutId, data);
@@ -151,10 +156,10 @@ public class ForumDetailActivity extends BaseActivity {
 
         @Override
         public void initItemView(BaseViewHolder holder, ReplayBean replayBean, int position) {
-            holder.setText(R.id.tv_name,"业主"+replayBean.getNumber()+"回复");
-            holder.setText(R.id.tv_time,(
+            holder.setText(R.id.tv_name, "业主" + replayBean.getNumber() + "回复");
+            holder.setText(R.id.tv_time, (
                     format.format(new Date(Long.parseLong(replayBean.getDate())))));
-            holder.setText(R.id.tv_content,replayBean.getInfo());
+            holder.setText(R.id.tv_content, replayBean.getInfo());
         }
     }
 }

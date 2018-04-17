@@ -5,7 +5,7 @@ package com.example.bsproperty.bean;
  */
 public class BaseResponse {
 
-    private int code;  //请求结果状态 1 成功  -1失败
+    private int code;  //请求结果状态 0 成功
     private String message;
 
     public int getCode() {

@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.bsproperty.MyApplication;
 import com.example.bsproperty.R;
 import com.example.bsproperty.adapter.BaseAdapter;
 import com.example.bsproperty.bean.ForumBean;
@@ -47,7 +49,7 @@ public class ForumFragment extends BaseFragment {
     private MyAdapter adapter;
     private ArrayList<ForumBean> mData;
     private int curPosition = -1;
-    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void loadData() {
@@ -78,8 +80,8 @@ public class ForumFragment extends BaseFragment {
             public void onItemClick(View v, Object item, int position) {
                 curPosition = position;
                 Intent intent = new Intent(mContext, ForumDetailActivity.class);
-                intent.putExtra("data",mData.get(position));
-                startActivityForResult(intent,5521);
+                intent.putExtra("data", mData.get(position));
+                startActivityForResult(intent, 5521);
             }
         });
         rvList.setAdapter(adapter);
@@ -87,14 +89,14 @@ public class ForumFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case 5521:
-                    int count = data.getIntExtra("count",0);
-                    if (count != 0 && curPosition != -1){
+                    int count = data.getIntExtra("count", 0);
+                    if (count != 0 && curPosition != -1) {
                         int curCount = Integer.parseInt(mData.get(curPosition).getCount());
                         int total = curCount + count;
-                        mData.get(curPosition).setCount(total+"");
+                        mData.get(curPosition).setCount(total + "");
                         adapter.notifyItemChanged(curPosition);
                         curPosition = -1;
                     }
@@ -120,8 +122,8 @@ public class ForumFragment extends BaseFragment {
         @Override
         public void initItemView(BaseViewHolder holder, ForumBean forumBean, int position) {
             holder.setText(R.id.tv_title, forumBean.getTitle());
-            holder.setText(R.id.tv_name, "(业主"+forumBean.getNumber()+"发布)");
-            holder.setText(R.id.tv_time,(
+            holder.setText(R.id.tv_name, "(业主" + forumBean.getNumber() + "发布)");
+            holder.setText(R.id.tv_time, (
                     format.format(new Date(Long.parseLong(forumBean.getDate())))));
             holder.setText(R.id.tv_content, forumBean.getInfo());
             holder.setText(R.id.tv_count, forumBean.getCount() + "回复");
@@ -131,7 +133,11 @@ public class ForumFragment extends BaseFragment {
 
     @OnClick({R.id.tv_send})
     public void onViewClicked() {
-        startActivityForResult(new Intent(mContext, SendForumActivity.class),521);
+        if (MyApplication.getInstance().getUserBean() == null) {
+            Toast.makeText(mContext, "请先登陆", Toast.LENGTH_SHORT).show();
+        } else {
+            startActivityForResult(new Intent(mContext, SendForumActivity.class), 521);
+        }
     }
 
 }
